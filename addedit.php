@@ -1,4 +1,4 @@
-<?php /* FILES $Id: addedit.php,v 1.26 2004/07/14 16:26:47 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
@@ -121,7 +121,7 @@ function setTask( key, val ) {
 	<?php if ($link_id) { ?>
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_( 'Link Name' );?>:</td>
-			<td align="left" class="hilite"><?php echo strlen($obj->link_name)== 0 ? "n/a" : $obj->link_name;?></td>
+			<td align="left" class="hilite"><input type="text" class="text" name="link_name" value="<?echo $obj->link_name;?>"></td>
 			<td>
 				<a href="<?php echo $obj->link_url;?>"><?php echo $AppUI->_( 'go' );?></a>
 			</td>
