@@ -38,7 +38,7 @@ class CSetupLinks {
 
   function install() {
         $sql = "
-CREATE TABLE `" . $dPconfig['dbname'] . "`.`links` (
+CREATE TABLE `links` (
 `link_id` int( 11 ) NOT NULL AUTO_INCREMENT ,
 `link_url` varchar( 255 ) NOT NULL default '',
 `link_project` int( 11 ) NOT NULL default '0',
