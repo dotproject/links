@@ -1,4 +1,4 @@
-<?php /* FILES $Id: addedit.php,v 1.5 2005/02/11 06:40:52 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.6 2005/02/14 05:20:52 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
@@ -178,7 +178,7 @@ function setTask( key, val ) {
 </tr>
 <tr>
 	<td>
-		<input class="button" type="button" name="cancel" value="<?php echo $AppUI->_('cancel');?>" onClick="javascript:if(confirm('<?php echo $AppUI->_('Are you sure you want to cancel?'); ?>')){location.href = './index.php?m=links';}" />
+		<input class="button" type="button" name="cancel" value="<?php echo $AppUI->_('cancel');?>" onClick="javascript:if(confirm('<?php echo $AppUI->_('Are you sure you want to cancel?', UI_OUTPUT_JS); ?>')){location.href = './index.php?m=links';}" />
 	</td>
 	<td align="right">
 		<input type="button" class="button" value="<?php echo $AppUI->_( 'submit' );?>" onclick="submitIt()" />
