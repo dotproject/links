@@ -1,5 +1,5 @@
 <?php
-/* FILES $Id: index_table.php,v 1.3 2004/08/06 08:43:32 cyberhorse Exp $ */
+/* FILES $Id: index_table.php,v 1.4 2004/09/08 10:37:48 cyberhorse Exp $ */
 // modified later by Pablo Roca (proca) in 18 August 2003 - added page support
 // Files modules: index page re-usable sub-table
 $m = 'links';
@@ -142,10 +142,11 @@ else
 $sql = "
 SELECT links.*,
 	project_name, project_color_identifier, project_active,
-	user_first_name, user_last_name,task_name,task_id
+	contact_first_name, contact_last_name,task_name,task_id
 FROM links, permissions
 LEFT JOIN projects ON project_id = link_project
-LEFT JOIN users ON user_id = link_owner
+LEFT JOIN user ON user_id = link_owner
+LEFT JOIN contacts ON user_contact = contact_id 
 LEFT JOIN tasks on link_task = task_id
 WHERE
 	permission_user = $AppUI->user_id
@@ -230,7 +231,7 @@ for ($i = ($page - 1)*$xpg_pagesize; $i < $page*$xpg_pagesize && $i < $xpg_total
 	<td width="20%"><?php echo $row['link_description'];?></td>
         <td width="10%" nowrap="nowrap" align="center"><?php echo $link_types[$row['link_category']];?></td> 
 	<td width="5%" align="center"><a href="./index.php?m=tasks&a=view&task_id=<?php echo $row["task_id"];?>"><?php echo $row["task_name"];?></a></td>
-	<td width="15%" nowrap="nowrap"><?php echo $row["user_first_name"].' '.$row["user_last_name"];?></td>
+	<td width="15%" nowrap="nowrap"><?php echo $row["contact_first_name"].' '.$row["contact_last_name"];?></td>
 	<td width="15%" nowrap="nowrap"><?php echo $row["link_type"];?></td>
 	<td width="15%" nowrap="nowrap" align="right"><?php echo $link_date->format( "$df $tf" );?></td>
 </tr>
