@@ -1,4 +1,4 @@
-<?php /* FILES $Id: index.php,v 1.2 2004/08/06 08:43:32 cyberhorse Exp $ */
+<?php /* FILES $Id: index.php,v 1.3 2005/02/10 00:48:15 cyberhorse Exp $ */
 $AppUI->savePlace();
 
 // retrieve any state parameters
@@ -46,7 +46,7 @@ if ($canEdit) {
 }
 $titleBlock->show();
 
-$link_types = dPgetSysVal("FileType");
+$link_types = dPgetSysVal("LinkType");
 if ( $tab != -1 ) {
         array_unshift($link_types, "All Links");
 }
