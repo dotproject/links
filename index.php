@@ -1,4 +1,4 @@
-<?php /* FILES $Id: index.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
+<?php /* FILES $Id: index.php,v 1.2 2004/08/06 08:43:32 cyberhorse Exp $ */
 $AppUI->savePlace();
 
 // retrieve any state parameters
@@ -19,18 +19,18 @@ require_once( $AppUI->getModuleClass( 'projects' ) );
 // get the list of visible companies
 $extra = array(
 	'from' => 'links',
-	'where' => 'AND project_id = link_project'
+	'where' => 'project_id = link_project'
 );
 
 $project = new CProject();
 $projects = $project->getAllowedRecords( $AppUI->user_id, 'project_id,project_name', 'project_name', null, $extra );
-$projects = arrayMerge( array( '0'=>$AppUI->_('All') ), $projects );
+$projects = arrayMerge( array( '0'=>$AppUI->_('All', UI_OUTPUT_JS) ), $projects );
 
 // setup the title block
 $titleBlock = new CTitleBlock( 'Links', 'folder5.png', $m, "$m.$a" );
 $titleBlock->addCell( $AppUI->_('Search') . ':' );
 $titleBlock->addCell(
-        '<input type="text" class="text" SIZE="10" name="search" onChange="document.searchfilter.submit();" value=' . "'$search'" .         'title="'. $AppUI->_('Search in name and description fields') . '"/>'
+        '<input type="text" class="text" SIZE="10" name="search" onChange="document.searchfilter.submit();" value=' . "'$search'" .         'title="'. $AppUI->_('Search in name and description fields', UI_OUTPUT_JS) . '"/>'
  ,'',       '<form action="?m=links" method="post" id="searchfilter">', '</form>'
 );
 $titleBlock->addCell( $AppUI->_('Filter') . ':' );
