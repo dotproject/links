@@ -1,4 +1,4 @@
-<?php /* FILES $Id: addedit.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.2 2004/09/08 10:29:35 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
@@ -118,10 +118,10 @@ function setTask( key, val ) {
 <tr>
 	<td width="100%" valign="top" align="center">
 		<table cellspacing="1" cellpadding="2" width="60%">
-	<?php if ($link_id) { ?>
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_( 'Link Name' );?>:</td>
-			<td align="left" class="hilite"><input type="text" class="text" name="link_name" value="<?echo $obj->link_name;?>"></td>
+			<td align="left"><input type="text" class="text" name="link_name" value="<?echo $obj->link_name;?>"></td>
+	<?php if ($link_id) { ?>
 			<td>
 				<a href="<?php echo $obj->link_url;?>"><?php echo $AppUI->_( 'go' );?></a>
 			</td>
@@ -133,8 +133,8 @@ function setTask( key, val ) {
 		<tr>
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_( 'Uploaded By' );?>:</td>
 			<td align="left" class="hilite"><?php echo $obj->user_first_name . ' '. $obj->user_last_name;?></td>
-		</tr>
 	<?php } ?>
+		</tr>
                 <tr>
                         <td align="right" nowrap="nowrap"><?php echo $AppUI->_('Category');?>:</td>
                         <td align="left">
