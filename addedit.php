@@ -1,4 +1,4 @@
-<?php /* FILES $Id: addedit.php,v 1.4 2005/02/10 03:04:43 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.5 2005/02/11 06:40:52 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
@@ -91,7 +91,7 @@ function delIt() {
 function popTask() {
     var f = document.uploadFrm;
     if (f.link_project.selectedIndex == 0) {
-        alert( "<?php echo $AppUI->_('Please select a project first!');?>" );
+        alert( "<?php echo $AppUI->_('Please select a project first!', UI_OUTPUT_JS);?>" );
     } else {
         window.open('./index.php?m=public&a=selector&dialog=1&callback=setTask&table=tasks&task_project='
             + f.link_project.options[f.link_project.selectedIndex].value, 'task','left=50,top=50,height=250,width=400,resizable')
