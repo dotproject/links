@@ -1,9 +1,9 @@
 <?php
-/* FILES $Id: index_table.php,v 1.4 2004/09/08 10:37:48 cyberhorse Exp $ */
+/* FILES $Id: index_table.php,v 1.6 2005/02/10 14:46:28 cyberhorse Exp $ */
 // modified later by Pablo Roca (proca) in 18 August 2003 - added page support
 // Files modules: index page re-usable sub-table
 $m = 'links';
-function shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page)
+function shownavbar_links($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page)
 {
 
 	GLOBAL $AppUI, $m;
@@ -176,7 +176,7 @@ $xpg_totalrecs = count($links);
 // How many pages are we dealing with here ??
 $xpg_total_pages = ($xpg_totalrecs > $xpg_pagesize) ? ceil($xpg_totalrecs / $xpg_pagesize) : 0;
 
-shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page);
+shownavbar_links($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page);
 
 ?>
 <table width="100%" border="0" cellpadding="2" cellspacing="1" class="tbl">
@@ -238,5 +238,5 @@ for ($i = ($page - 1)*$xpg_pagesize; $i < $page*$xpg_pagesize && $i < $xpg_total
 <?php }?>
 </table>
 <?php
-shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page);
+shownavbar_links($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page);
 ?>
