@@ -1,29 +1,11 @@
 How to integrate in Projects (subject to change really soon):
 
+!Important!: the following will not be necessary soon. There is a new mechanism for importing tabs in cvs now.
+
+
 add this tab to the rest. Go to about line 314 and add the following line to the other, similar looking lines:
 ----> projects/view.php
 
 $showProject = false;
 $tabBox->add( "{$dPconfig['root_dir']}/modules/links/index_table", 'Links');
 
------> tasks/view.php add this (somewhere in the middle, right after the row for Attached Files):
-
-                <tr>
-                        <td width="100%"><strong><?php echo $AppUI->_('Attached Links');?></strong></td>
-                        <td align="right" nowrap="nowrap">
-                        <?php if (!getDenyEdit( 'links' )) { ?>
-                                <a href="./index.php?m=links&a=addedit&project_id=<?php echo $obj->task_project;?>&link_task=<?php echo $task_id;?>"><?php echo $AppUI->_('Attach a link');?>
-                                </a>
-                        <?php } ?>
-                        </td>
-                        <td width="20">
-                                <?php echo dPshowImage( dPfindImage( 'stock_attach-16.png', $m ), 16, 16, '' ); ?>
-                        </td>
-                </tr>
-
--- and at the end of the file, this:
-
-
-$showProject = false;
-$project_id = $obj->task_project;
-//$tabBox->add( "{$dPconfig['root_dir']}/modules/links/index_table", 'Links');
