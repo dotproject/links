@@ -1,5 +1,5 @@
 <?php
-/* FILES $Id: index_table.php,v 1.21 2004/08/05 17:54:56 cyberhorse Exp $ */
+/* FILES $Id: index_table.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
 // modified later by Pablo Roca (proca) in 18 August 2003 - added page support
 // Files modules: index page re-usable sub-table
 $m = 'links';
@@ -8,6 +8,7 @@ function shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page)
 
 	GLOBAL $AppUI, $m;
 	$xpg_break = false;
+        $xpg_prev_page = $xpg_next_page = 0;
 	
 	echo "\t<table width='100%' cellspacing='0' cellpadding='0' border=0><tr>";
 
@@ -104,7 +105,7 @@ GLOBAL $AppUI, $deny1, $canRead, $canEdit;
 
 $tab = $AppUI->getState( 'LinkIdxTab' ) !== NULL ? $AppUI->getState( 'LinkIdxTab' ) : 0;
 $page = dPgetParam( $_GET, "page", 1);
-$project_id = dPgetParam( $_POST, 'project_id', 0);
+$project_id = dPgetParam( $_REQUEST, 'project_id', 0);
 $showProject = true;
 
 $xpg_pagesize = 30;
@@ -163,9 +164,7 @@ else
 $xpg_totalrecs = count($links);
 
 // How many pages are we dealing with here ??
-if ($xpg_totalrecs > $xpg_pagesize) {
-	$xpg_total_pages = ceil($xpg_totalrecs / $xpg_pagesize);
-}
+$xpg_total_pages = ($xpg_totalrecs > $xpg_pagesize) ? ceil($xpg_totalrecs / $xpg_pagesize) : 0;
 
 shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page);
 
@@ -225,7 +224,6 @@ for ($i = ($page - 1)*$xpg_pagesize; $i < $page*$xpg_pagesize && $i < $xpg_total
 	<td width="15%" nowrap="nowrap"><?php echo $row["link_type"];?></td>
 	<td width="15%" nowrap="nowrap" align="right"><?php echo $link_date->format( "$df $tf" );?></td>
 </tr>
-<?= $hidden_table ?>
 <?php }?>
 </table>
 <?php
