@@ -1,8 +1,9 @@
-<?php /* FILES $Id: addedit.php,v 1.2 2004/09/08 10:29:35 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.3 2004/09/08 10:34:27 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
-$canEdit = !getDenyEdit( $m, $link_id );
+$perms =& $AppUI->acl();
+$canEdit = $perms->checkModuleItem( $m, 'edit', $link_id );
 if (!$canEdit) {
 	$AppUI->redirect( "m=public&a=access_denied" );
 }
@@ -45,7 +46,8 @@ if (!db_loadObject( $sql, $obj ) && $link_id > 0) {
 $ttl = $link_id ? "Edit Link" : "Add Link";
 $titleBlock = new CTitleBlock( $ttl, 'folder5.png', $m, "$m.$a" );
 $titleBlock->addCrumb( "?m=$m", "links list" );
-if ($canEdit && $link_id > 0) {
+$canDelete = $perms->checkModuleItem( $m, 'delete', $link_id );
+if ($canDelete && $link_id > 0) {
 	$titleBlock->addCrumbDelete( 'delete link', $canDelete, $msg );
 }
 $titleBlock->show();
@@ -64,11 +66,11 @@ if ($obj->link_task) {
 }
 
 $extra = array(
-	'where'=>'AND project_active <> 0'
+	'where'=>'project_active <> 0'
 );
 $project = new CProject();
 $projects = $project->getAllowedRecords( $AppUI->user_id, 'project_id,project_name', 'project_name', null, $extra );
-$projects = arrayMerge( array( '0'=>$AppUI->_('All') ), $projects );
+$projects = arrayMerge( array( '0'=>$AppUI->_('All', UI_OUTPUT_JS) ), $projects );
 
 //$sql = "SELECT project_id, project_name  FROM projects ORDER BY project_name";
 //$projects = arrayMerge( array( '0'=>'- ALL PROJECTS -'), db_loadHashList( $sql ) );
@@ -79,7 +81,7 @@ function submitIt() {
 	f.submit();
 }
 function delIt() {
-	if (confirm( "<?php echo $AppUI->_('linksDelete');?>" )) {
+	if (confirm( "<?php echo $AppUI->_('linksDelete', UI_OUTPUT_JS);?>" )) {
 		var f = document.uploadFrm;
 		f.del.value='1';
 		f.submit();
@@ -145,7 +147,7 @@ function setTask( key, val ) {
 			<td align="right" nowrap="nowrap"><?php echo $AppUI->_( 'Project' );?>:</td>
 			<td align="left">
 			<?php
-				echo arraySelect( $projects, 'link_project', 'size="1" class="text" style="width:270px"', $link_project  );
+				echo arraySelect( $projects, 'link_project', 'size="1" class="text" style="width:270px"', $link_project );
 			?>
 			</td>
 		</tr>
