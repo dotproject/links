@@ -1,5 +1,5 @@
 <?php
-/* FILES $Id: index_table.php,v 1.2 2004/08/06 06:47:17 cyberhorse Exp $ */
+/* FILES $Id: index_table.php,v 1.3 2004/08/06 08:43:32 cyberhorse Exp $ */
 // modified later by Pablo Roca (proca) in 18 August 2003 - added page support
 // Files modules: index page re-usable sub-table
 $m = 'links';
@@ -49,8 +49,7 @@ function shownavbar($xpg_totalrecs, $xpg_pagesize, $xpg_total_pages, $page)
 			if ($n == $page) {
 				echo "<b>$n</b></a>";
 			} else {
-				echo "<a href='./index.php?m=' . $m . '&amp;page=$n'>";
-				echo $n . "</a>";
+				echo '<a href="./index.php?m=' . $m . '&amp;page=' . $n . '">' . $n . '</a>';
 			} 
 			if ($n >= 30+$page-15) {
 				$xpg_break = true;
