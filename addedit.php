@@ -1,4 +1,4 @@
-<?php /* FILES $Id: addedit.php,v 1.3 2004/09/08 10:34:27 cyberhorse Exp $ */
+<?php /* FILES $Id: addedit.php,v 1.4 2005/02/10 03:04:43 cyberhorse Exp $ */
 $link_id = intval( dPgetParam( $_GET, 'link_id', 0 ) );
  
 // check permissions for this record
@@ -18,12 +18,13 @@ $link_project = intval( dPgetParam( $_GET, 'project_id', 0 ) );
 $sql = "
 SELECT links.*,
 	user_username,
-	user_first_name,
-	user_last_name,
+	contact_first_name,
+	contact_last_name,
 	project_id,
 	task_id, task_name
 FROM links
 LEFT JOIN users ON link_owner = user_id
+LEFT JOIN contacts ON user_contact = contact_id
 LEFT JOIN projects ON project_id = link_project
 LEFT JOIN tasks ON task_id = link_task
 WHERE link_id = $link_id
