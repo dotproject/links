@@ -1,5 +1,5 @@
 <?php
-/* FILES $Id: index_table.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
+/* FILES $Id: index_table.php,v 1.2 2004/08/06 06:47:17 cyberhorse Exp $ */
 // modified later by Pablo Roca (proca) in 18 August 2003 - added page support
 // Files modules: index page re-usable sub-table
 $m = 'links';
@@ -105,8 +105,17 @@ GLOBAL $AppUI, $deny1, $canRead, $canEdit;
 
 $tab = $AppUI->getState( 'LinkIdxTab' ) !== NULL ? $AppUI->getState( 'LinkIdxTab' ) : 0;
 $page = dPgetParam( $_GET, "page", 1);
-$project_id = dPgetParam( $_REQUEST, 'project_id', 0);
-$showProject = true;
+$search = dPgetParam( $_REQUEST, 'search', '');
+if (!empty($search))
+        $search_sql = " AND (link_name like '%$search%' OR link_description like '%$search%')";
+else
+        $search_sql = '';
+
+global $project_id, $task_id, $showProject;
+if (!isset($project_id))
+        $project_id = dPgetParam( $_REQUEST, 'project_id', 0);
+if (!isset($showProject))
+        $showProject = true;
 
 $xpg_pagesize = 30;
 $xpg_min = $xpg_pagesize * ($page - 1); // This is where we start our record set from
@@ -141,7 +150,7 @@ LEFT JOIN users ON user_id = link_owner
 LEFT JOIN tasks on link_task = task_id
 WHERE
 	permission_user = $AppUI->user_id
-        $catsql
+        $catsql $search_sql
 	AND permission_value <> 0
 	AND (
 		(permission_grant_on = 'all')
@@ -152,6 +161,7 @@ WHERE
 . (count( $deny1 ) > 0 ? "\nAND link_project NOT IN (" . implode( ',', $deny1 ) . ')' : '') 
 . (count( $deny2 ) > 0 ? "\nAND link_task NOT IN (" . implode( ',', $deny2 ) . ')' : '') 
 . ($project_id ? "\nAND link_project = $project_id" : '')
+. (isset($task_id) ? "\nAND link_task = $task_id" : '')
 . '
 ORDER BY project_name, link_name';
 
@@ -197,8 +207,9 @@ for ($i = ($page - 1)*$xpg_pagesize; $i < $page*$xpg_pagesize && $i < $xpg_total
 		if ($showProject) {
 			$s = '<tr>';
 			$s .= '<td colspan="10" style="background-color:#'.$row["project_color_identifier"].'" style="border: outset 2px #eeeeee">';
-			$s .= '<font color="' . bestColor( $row["project_color_identifier"] ) . '">'
-			. $row["project_name"] . '</font>';
+			$s .= '<font color="' . bestColor( $row["project_color_identifier"] ) . '">
+                <a href="?m=projects&a=view&project_id=' . $row['link_project'] . '">'
+			. $row["project_name"] . '</a></font>';
 			$s .= '</td></tr>';
 			echo $s;
 		}

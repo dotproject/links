@@ -1,4 +1,4 @@
-<?php /* FILES $Id: index.php,v 1.29 2004/07/25 18:15:35 gregorerhardt Exp $ */
+<?php /* FILES $Id: index.php,v 1.1 2004/08/06 05:01:31 cyberhorse Exp $ */
 $AppUI->savePlace();
 
 // retrieve any state parameters
@@ -27,7 +27,12 @@ $projects = $project->getAllowedRecords( $AppUI->user_id, 'project_id,project_na
 $projects = arrayMerge( array( '0'=>$AppUI->_('All') ), $projects );
 
 // setup the title block
-$titleBlock = new CTitleBlock( 'Files', 'folder5.png', $m, "$m.$a" );
+$titleBlock = new CTitleBlock( 'Links', 'folder5.png', $m, "$m.$a" );
+$titleBlock->addCell( $AppUI->_('Search') . ':' );
+$titleBlock->addCell(
+        '<input type="text" class="text" SIZE="10" name="search" onChange="document.searchfilter.submit();" value=' . "'$search'" .         'title="'. $AppUI->_('Search in name and description fields') . '"/>'
+ ,'',       '<form action="?m=links" method="post" id="searchfilter">', '</form>'
+);
 $titleBlock->addCell( $AppUI->_('Filter') . ':' );
 $titleBlock->addCell(
 	arraySelect( $projects, 'project_id', 'onChange="document.pickProject.submit()" size="1" class="text"', $project_id ), '',
