@@ -145,7 +145,7 @@ SELECT links.*,
 	contact_first_name, contact_last_name,task_name,task_id
 FROM links, permissions
 LEFT JOIN projects ON project_id = link_project
-LEFT JOIN user ON user_id = link_owner
+LEFT JOIN users ON user_id = link_owner
 LEFT JOIN contacts ON user_contact = contact_id 
 LEFT JOIN tasks on link_task = task_id
 WHERE
